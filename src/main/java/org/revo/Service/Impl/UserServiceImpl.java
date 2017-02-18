@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void active(Long id) {
-        userRepository.setActiveTrueById(id);
+        userRepository.setActiveTrueAndType110ById(id);
     }
 
     @Override

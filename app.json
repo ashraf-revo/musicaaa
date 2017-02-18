@@ -1,0 +1,7 @@
+{
+  "name": "music",
+  "description": "This Is A Music Application On Heroku.",
+  "repository": "https://github.com/ashraf-revo/mredithour",
+  "image": "heroku/java",
+  "addons": [ "heroku-postgresql" ]
+}
