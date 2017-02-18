@@ -72,18 +72,4 @@ public class Util {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-    @Bean
-    RememberMeServices rememberMeServices(AppEnv appEnv, UserDetailsService userDetailsService, PersistentTokenRepository persistentTokenRepository) {
-        return new PersistentTokenBasedRememberMeServices(appEnv.getKey(), userDetailsService, persistentTokenRepository);
-    }
-
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository(DataSource dataSource) {
-        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-        jdbcTokenRepository.setDataSource(dataSource);
-        return jdbcTokenRepository;
-    }
-
 }
