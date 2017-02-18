@@ -1,7 +1,6 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 /data/
-/src/main/resources/static
 /src/main/resources/music-static/node_modules
 
 ### STS ###
