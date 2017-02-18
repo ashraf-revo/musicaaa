@@ -26,10 +26,10 @@ elif [ $value -eq 3 ]; then
     mvn clean
 elif [ $value -eq 4 ]; then
     cf delete music
-    cf delete-service MongoDbmusic
+#    cf delete-service MongoDbmusic
     cf delete-service MySqlDbmusic
 #    cf create-service mLab sandbox MongoDbmusic
-    cf create-service cleardb spark MySqlDbmusic
+#    cf create-service cleardb spark MySqlDbmusic
 elif [ $value -eq 5 ]; then
     cd src/main/resources/music-static/
     ng serve
