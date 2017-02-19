@@ -7,6 +7,7 @@ import org.revo.Service.IndexedSongService;
 import org.revo.Service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -24,11 +25,13 @@ public class SongServiceImpl implements SongService {
     @Autowired
     private IndexedSongService indexedSongService;
 
+    @Transactional(readOnly = true)
     @Override
     public List<Song> findAll() {
         return songRepository.findBy();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Song> findAllTo(Long id) {
         return songRepository.findByUser_Id(id);
@@ -48,11 +51,13 @@ public class SongServiceImpl implements SongService {
         return song;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Song> findViewsByUser_Id(Long id) {
         return songRepository.findViewsByUser_Id(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Song> findLikesByUser_Id(Long id) {
         return songRepository.findLikesByUser_Id(id);

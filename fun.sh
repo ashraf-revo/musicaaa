@@ -26,7 +26,7 @@ function run_push(){
 
 function run_services(){
     cf delete music
-#    cf delete-service MongoDbmusic
+    cf delete-service MongoDbmusic
     cf delete-service MySqlDbmusic
 #    cf create-service mLab sandbox MongoDbmusic
     cf create-service cleardb spark MySqlDbmusic
