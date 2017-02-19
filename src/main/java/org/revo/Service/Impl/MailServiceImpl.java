@@ -1,5 +1,6 @@
 package org.revo.Service.Impl;
 
+import org.revo.Configration.AppEnv;
 import org.revo.Domain.User;
 import org.revo.Service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,16 @@ import javax.mail.internet.MimeMessage;
 public class MailServiceImpl implements MailService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
+    private final AppEnv appEnv;
 
-    @Value("${vcap.application.uris[0]:http://localhost:8080}")
-    String uris;
     @Value("${info.application.name}")
     String appname;
 
     @Autowired
-    public MailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine) {
+    public MailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, AppEnv appEnv) {
         this.javaMailSender = javaMailSender;
         this.templateEngine = templateEngine;
+        this.appEnv = appEnv;
     }
 
     private void Send(String to, String subject, String text, boolean isHtml) throws MessagingException {
@@ -44,8 +45,8 @@ public class MailServiceImpl implements MailService {
     @Override
     public void SendActivation(User user) {
         Context context = new Context();
-        context.setVariable("name", user.getName() + "       " + uris + "/active/" + user.getId());
-        context.setVariable("link", uris + "/active/" + user.getId());
+        context.setVariable("name", user.getName() + "       " + appEnv.getUrl() + "/active/" + user.getId());
+        context.setVariable("link", appEnv.getUrl() + "/active/" + user.getId());
         context.setVariable("appname", appname);
         try {
             Send(user.getEmail(), "Activation Message", templateEngine.process("activation", context), true);

@@ -13,6 +13,7 @@ import java.util.List;
 public class AppEnv {
     private List<User> users = new ArrayList<>();
     private String key = "org.revo.key";
+    private String url;
     private Cloudinary cloudinary = new Cloudinary();
 
     public List<User> getUsers() {
@@ -29,6 +30,14 @@ public class AppEnv {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Cloudinary getCloudinary() {

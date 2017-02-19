@@ -16,12 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-
-import javax.sql.DataSource;
 
 import static java.util.stream.Collectors.toList;
 
@@ -71,5 +67,12 @@ public class Util {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    RememberMeServices rememberMeServices(AppEnv appEnv, UserDetailsService userDetailsService) {
+        TokenBasedRememberMeServices tokenBasedRememberMeServices = new TokenBasedRememberMeServices(appEnv.getKey(), userDetailsService);
+        tokenBasedRememberMeServices.setAlwaysRemember(true);
+        return tokenBasedRememberMeServices;
     }
 }

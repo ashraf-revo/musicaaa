@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 import static javax.servlet.http.HttpServletResponse.SC_OK;
@@ -35,7 +36,8 @@ public class Security extends WebSecurityConfigurerAdapter {
     private AppEnv appEnv;
     @Autowired
     private CsrfTokenRepository csrfTokenRepository;
-
+    @Autowired
+    private RememberMeServices rememberMeServices;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -73,6 +75,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 })
                 .and().logout()
                 .logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> this.csrfTokenRepository.saveToken(this.csrfTokenRepository.generateToken(httpServletRequest), httpServletRequest, httpServletResponse))
+                .and().rememberMe().key(appEnv.getKey()).rememberMeServices(rememberMeServices)
                 .and().csrf().csrfTokenRepository(this.csrfTokenRepository);
     }
 
