@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.revo.Util.ViewDetails;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ import java.util.Date;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "music_like")
-public class Like extends BaseEntity{
+public class Like extends BaseEntity {
     @ManyToOne
     @JoinColumn
     @NotNull
@@ -37,10 +36,14 @@ public class Like extends BaseEntity{
     @JsonView(ViewDetails.likeSong.class)
     private Song song;
 
-    public Like(Long id,Long user,Long song,Date createdDate) {
+    public Like(Long id, Long user, Long song, Date createdDate) {
         super.setId(id);
         this.user = new User(user);
         this.song = new Song(song);
         super.setCreatedDate(createdDate);
+    }
+
+    public Like(Song song) {
+        this.song = song;
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
@@ -65,4 +67,21 @@ public class SongApi {
         viewService.view(view);
         return ResponseEntity.ok().build();
     }
+
+
+    @Autowired
+    UserService userService;
+
+    @GetMapping("fuck/{end}")
+    public void fuck(@PathVariable("end") Integer end) {
+        Flux.range(0, end)
+                .parallel(8).runOn(Schedulers.parallel())
+                .map(String::valueOf).map(it -> new Song(it, it))
+                .map(it -> songService.save(it)).subscribe(it -> {
+            likeService.like(new Like(it));
+            viewService.view(new View(it));
+        });
+
+    }
+
 }

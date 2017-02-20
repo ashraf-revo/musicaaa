@@ -7,10 +7,12 @@ import org.revo.Domain.User;
 import org.revo.Repository.SongRepository;
 import org.revo.Service.IndexedSongService;
 import org.revo.Service.UserService;
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,6 +49,15 @@ public class Util {
                 indexedSongService.save(songRepository.findAll().stream().map(IndexedSong::indexedSong).collect(toList()));
             }
         };
+    }
+
+    @Bean
+    public MethodInvokingFactoryBean ss() {
+        MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
+        methodInvokingFactoryBean.setTargetClass(SecurityContextHolder.class);
+        methodInvokingFactoryBean.setTargetMethod("setStrategyName");
+        methodInvokingFactoryBean.setArguments(new Object[]{SecurityContextHolder.MODE_INHERITABLETHREADLOCAL});
+        return methodInvokingFactoryBean;
     }
 
     @Bean

@@ -36,6 +36,10 @@ public class View extends BaseEntity {
     @JsonView(ViewDetails.viewSong.class)
     private Song song;
 
+    public View(Song song) {
+        this.song = song;
+    }
+
     public View(Long id, Long user, Long song, Date createdDate) {
         super.setId(id);
         this.user = new User(user);

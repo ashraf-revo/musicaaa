@@ -73,6 +73,11 @@ public class Song extends BaseEntity{
         super.setId(id);
     }
 
+    public Song(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
     public Song(Long id, String title, String imageUrl, String fileUrl, String description, Long uid, String uname, String uimageUrl, String uphone, String uinfo, String uemail, Date ucreatedDate, Date createdDate) {
         super.setId(id);
         this.title = title;

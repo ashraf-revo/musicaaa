@@ -10,7 +10,6 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.revo.Util.ViewDetails;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -88,6 +87,7 @@ public class User extends BaseUser {
     public User(Long id) {
         super.setId(id);
     }
+
     public User(Long id, String name, String imageUrl, String phone, String info, String email, Date createdDate) {
         super.setId(id);
         this.name = name;
@@ -97,7 +97,8 @@ public class User extends BaseUser {
         this.email = email;
         super.setCreatedDate(createdDate);
     }
-    public User(Long id, String name, String imageUrl, String phone, String info, String email, Date createdDate,String password,boolean enable,boolean locked) {
+
+    public User(Long id, String name, String imageUrl, String phone, String info, String email, Date createdDate, String password, boolean enable, boolean locked) {
         super.setId(id);
         this.name = name;
         this.imageUrl = imageUrl;

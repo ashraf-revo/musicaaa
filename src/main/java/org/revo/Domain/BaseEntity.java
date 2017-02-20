@@ -8,7 +8,9 @@ import org.revo.Util.ViewDetails.like;
 import org.revo.Util.ViewDetails.view;
 import org.revo.Util.ViewDetails.user;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -20,6 +22,7 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 abstract class BaseEntity {
     @Id
     @GeneratedValue
