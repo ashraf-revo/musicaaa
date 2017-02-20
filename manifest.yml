@@ -10,4 +10,4 @@ applications:
   - MySqlDbmusic
   - NewRelicmusic
   env:
-    SPRING_PROFILES_ACTIVE: pivotal
+    SPRING_PROFILES_ACTIVE: custom
