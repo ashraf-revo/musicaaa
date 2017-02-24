@@ -3,7 +3,6 @@ package org.revo.Service.Impl;
 import org.revo.Domain.Song;
 import org.revo.Repository.SongRepository;
 import org.revo.Service.CloudinaryService;
-import org.revo.Service.IndexedSongService;
 import org.revo.Service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +20,6 @@ public class SongServiceImpl implements SongService {
     private SongRepository songRepository;
     @Autowired
     private CloudinaryService cloudinaryService;
-    @Autowired
-    private IndexedSongService indexedSongService;
 
     @Transactional(readOnly = true)
     @Override
@@ -46,7 +43,6 @@ public class SongServiceImpl implements SongService {
             song.setFileUrl(cloudinaryService.saveFile(song));
         }
         song = songRepository.save(song);
-        indexedSongService.save(song);
         return song;
     }
 

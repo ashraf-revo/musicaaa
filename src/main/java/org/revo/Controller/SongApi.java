@@ -26,8 +26,6 @@ public class SongApi {
     @Autowired
     private LikeService likeService;
     @Autowired
-    private IndexedSongService indexedSongService;
-    @Autowired
     private ViewService viewService;
     @Autowired
     private CachedUserService cachedUserService;
@@ -40,7 +38,7 @@ public class SongApi {
 
     @PostMapping(value = "search")
     public ResponseEntity<Page<Song>> search(@RequestBody SearchCriteria searchCriteria) {
-        return ResponseEntity.ok(indexedSongService.search(searchCriteria));
+        return null;
     }
 
     @PostMapping
@@ -73,7 +71,7 @@ public class SongApi {
     UserService userService;
 
     @GetMapping("fuck/{parallelism}/{from}/{end}")
-    public void fuck(@PathVariable("parallelism") Integer parallelism,@PathVariable("from") Integer from,@PathVariable("end") Integer end) {
+    public void fuck(@PathVariable("parallelism") Integer parallelism, @PathVariable("from") Integer from, @PathVariable("end") Integer end) {
         Flux.range(from, end)
                 .parallel(parallelism).runOn(Schedulers.parallel())
                 .map(String::valueOf).map(it -> new Song("1111111111111111111111111111", "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"))
