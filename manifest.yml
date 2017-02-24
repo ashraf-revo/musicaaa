@@ -7,7 +7,6 @@ applications:
   buildpack: java_buildpack
   path: target/music-0.0.1-SNAPSHOT.jar
   services:
-  - MySqlDbmusic
   - NewRelicmusic
   env:
     SPRING_PROFILES_ACTIVE: custom

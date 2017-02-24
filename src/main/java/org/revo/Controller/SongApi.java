@@ -76,7 +76,7 @@ public class SongApi {
     public void fuck(@PathVariable("parallelism") Integer parallelism,@PathVariable("from") Integer from,@PathVariable("end") Integer end) {
         Flux.range(from, end)
                 .parallel(parallelism).runOn(Schedulers.parallel())
-                .map(String::valueOf).map(it -> new Song(it, it))
+                .map(String::valueOf).map(it -> new Song("1111111111111111111111111111", "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"))
                 .map(it -> songService.save(it)).subscribe(it -> {
             likeService.like(new Like(it));
             viewService.view(new View(it));

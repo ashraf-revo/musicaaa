@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.revo.Util.ViewDetails;
@@ -31,9 +33,11 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @JsonIgnoreProperties("authorities")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "music_user")
+@Indexed
 public class User extends BaseUser {
     @NotBlank
     @Column(length = 30)
+    @Field
     @JsonView(ViewDetails.user.class)
     private String name;
     //    @URL
