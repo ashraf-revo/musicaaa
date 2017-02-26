@@ -58,7 +58,9 @@ public class User extends BaseUser {
     @JsonView(ViewDetails.user.class)
     private String name;
     //    @URL
-    @Column(length = 100)
+    @Column(length = 100
+//            ,name = "image_url"
+    )
     @Field(index = Index.NO, store = Store.YES)
     @JsonView(ViewDetails.user.class)
     private String imageUrl = "/assets/images/a0.png";

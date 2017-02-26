@@ -1,5 +1,6 @@
 package org.revo.Service;
 
+import org.hibernate.search.jpa.FullTextQuery;
 import org.revo.Domain.SearchCriteria;
 import org.revo.Domain.Song;
 
@@ -12,4 +13,6 @@ public interface SearchService {
     List<Song> search(SearchCriteria searchCriteria);
 
     List<Song> searchAndGet(SearchCriteria searchCriteria);
+
+    FullTextQuery getFullTextQuery(SearchCriteria searchCriteria);
 }

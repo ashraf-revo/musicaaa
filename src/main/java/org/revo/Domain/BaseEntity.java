@@ -11,10 +11,7 @@ import org.revo.Util.ViewDetails.view;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -32,5 +29,6 @@ abstract class BaseEntity {
     private Long id;
     @CreatedDate
     @JsonView({song.class, user.class, like.class, view.class})
+//    @Column(name = "created_date")
     private Date createdDate = new Date();
 }

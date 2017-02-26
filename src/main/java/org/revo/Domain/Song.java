@@ -39,15 +39,20 @@ public class Song extends BaseEntity {
     @NotBlank
     @Column(length = 70)
     @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
+    @Boost(10)
     @JsonView(ViewDetails.song.class)
     private String title;
     //    @URL
-    @Column(length = 100)
+    @Column(length = 100
+//            ,name = "image_url"
+    )
     @Field(index = Index.NO, store = Store.YES)
     @JsonView(ViewDetails.song.class)
     private String imageUrl = "/assets/images/p1.jpg";
     //    @URL
-    @Column(length = 100)
+    @Column(length = 100
+//            ,name = "file_url"
+    )
     @JsonView(ViewDetails.song.class)
     @Field(index = Index.NO, store = Store.YES)
     private String fileUrl = "/assets/audio/a0.mp3";
@@ -61,7 +66,7 @@ public class Song extends BaseEntity {
     @JoinColumn
     @NotNull
     @CreatedBy
-    @IndexedEmbedded
+    @IndexedEmbedded(includeEmbeddedObjectId = true)
     @JsonView(ViewDetails.songUser.class)
     private User user;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "song")
