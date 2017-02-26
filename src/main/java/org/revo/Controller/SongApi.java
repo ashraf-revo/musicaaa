@@ -36,8 +36,9 @@ public class SongApi {
         return ResponseEntity.ok(Util.buildLikes(songService.findAll(), cachedUserService.likesByCurrentUser()));
     }
 
-    @PostMapping(value = "search", params = "full")
-    public ResponseEntity<List<Song>> search(@RequestBody SearchCriteria searchCriteria, @RequestParam(value = "full", required = false) boolean full) {
+    @PostMapping(value = "search")
+    @JsonView(ViewDetails.CustomSong.class)
+    public ResponseEntity<List<Song>> search(@RequestBody SearchCriteria searchCriteria, @RequestParam(value = "full", required = false, defaultValue = "false") boolean full) {
         String fields = "title";
         return ResponseEntity.ok(full ? searchService.searchAndGet(searchCriteria, fields) : searchService.search(searchCriteria, fields));
     }
