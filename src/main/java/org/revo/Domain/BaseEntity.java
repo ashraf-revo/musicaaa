@@ -29,6 +29,5 @@ abstract class BaseEntity {
     private Long id;
     @CreatedDate
     @JsonView({song.class, user.class, like.class, view.class})
-//    @Column(name = "created_date")
     private Date createdDate = new Date();
 }

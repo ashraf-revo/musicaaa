@@ -10,9 +10,9 @@ import java.util.List;
  * Created by ashraf on 26/02/17.
  */
 public interface SearchService {
-    List<Song> search(SearchCriteria searchCriteria);
+    List<Song> search(SearchCriteria searchCriteria, String... fields);
 
-    List<Song> searchAndGet(SearchCriteria searchCriteria);
+    List<Song> searchAndGet(SearchCriteria searchCriteria, String... fields);
 
-    FullTextQuery getFullTextQuery(SearchCriteria searchCriteria);
+    FullTextQuery getFullTextQuery(SearchCriteria searchCriteria, String... fields);
 }

@@ -27,9 +27,9 @@ public class SearchServiceImpl implements SearchService {
     private EntityManager entityManager;
 
     @Override
-    public List<Song> search(SearchCriteria searchCriteria) {
-        @SuppressWarnings("unchecked") List<Object[]> data = getFullTextQuery(searchCriteria)
-                .setProjection(Song.SearchField())
+    public List<Song> search(SearchCriteria searchCriteria,String ... fields) {
+        @SuppressWarnings("unchecked") List<Object[]> data = getFullTextQuery(searchCriteria,fields)
+                .setProjection(Song.ProjectionField())
 
                 .getResultList();
         return data.stream().map(it -> {
@@ -37,26 +37,20 @@ public class SearchServiceImpl implements SearchService {
             song.setId(Long.valueOf(String.valueOf(it[0])));
             song.setTitle(String.valueOf(it[1]));
             song.setDescription(String.valueOf(it[2]));
-            User user = new User();
-            user.setId(Long.valueOf(String.valueOf(it[3])));
-            user.setName(String.valueOf(it[4]));
-            user.setEmail(String.valueOf(it[5]));
-            user.setInfo(String.valueOf(it[6]));
-            song.setUser(user);
             return song;
         }).collect(toList());
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Song> searchAndGet(SearchCriteria searchCriteria) {
-        return getFullTextQuery(searchCriteria).getResultList();
+    public List<Song> searchAndGet(SearchCriteria searchCriteria,String ...fields) {
+        return getFullTextQuery(searchCriteria,fields).getResultList();
     }
 
-    public FullTextQuery getFullTextQuery(SearchCriteria searchCriteria) {
+    public FullTextQuery getFullTextQuery(SearchCriteria searchCriteria,String ...fields) {
         FullTextEntityManager fullTextEntityManager = getFullTextEntityManager(entityManager);
         Query query = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Song.class).get()
-                .keyword().onFields(Song.SearchField()).matching(searchCriteria.getSearch()).createQuery();
+                .keyword().onFields(fields).matching(searchCriteria.getSearch()).createQuery();
         return fullTextEntityManager.createFullTextQuery(query, Song.class).
                 setFirstResult(searchCriteria.getPage().getNumber()).
                 setMaxResults(searchCriteria.getPage().getSize());

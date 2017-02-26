@@ -7,7 +7,6 @@ import org.revo.Util.ExtractText;
 import org.revo.Util.Util;
 import org.revo.Util.ViewDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +27,8 @@ public class SongApi {
     private ViewService viewService;
     @Autowired
     private CachedUserService cachedUserService;
+    @Autowired
+    private SearchService searchService;
 
     @GetMapping
     @JsonView(ViewDetails.CustomSong.class)
@@ -35,9 +36,10 @@ public class SongApi {
         return ResponseEntity.ok(Util.buildLikes(songService.findAll(), cachedUserService.likesByCurrentUser()));
     }
 
-    @PostMapping(value = "search")
-    public ResponseEntity<Page<Song>> search(@RequestBody SearchCriteria searchCriteria) {
-        return null;
+    @PostMapping(value = "search", params = "full")
+    public ResponseEntity<List<Song>> search(@RequestBody SearchCriteria searchCriteria, @RequestParam(value = "full", required = false) boolean full) {
+        String fields = "title";
+        return ResponseEntity.ok(full ? searchService.searchAndGet(searchCriteria, fields) : searchService.search(searchCriteria, fields));
     }
 
     @PostMapping

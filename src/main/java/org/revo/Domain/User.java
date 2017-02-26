@@ -58,9 +58,7 @@ public class User extends BaseUser {
     @JsonView(ViewDetails.user.class)
     private String name;
     //    @URL
-    @Column(length = 100
-//            ,name = "image_url"
-    )
+    @Column(length = 100)
     @Field(index = Index.NO, store = Store.YES)
     @JsonView(ViewDetails.user.class)
     private String imageUrl = "/assets/images/a0.png";
@@ -87,7 +85,7 @@ public class User extends BaseUser {
     @JsonView(ViewDetails.user.class)
     private String currentPassword;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    @ContainedIn
+//    @ContainedIn
     @JsonView(ViewDetails.userSongs.class)
     private List<Song> songs = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")

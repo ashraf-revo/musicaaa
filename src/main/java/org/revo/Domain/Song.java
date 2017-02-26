@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.*;
-import org.hibernate.search.annotations.Index;
 import org.hibernate.validator.constraints.NotBlank;
 import org.revo.Util.ViewDetails;
 import org.springframework.data.annotation.CreatedBy;
@@ -39,22 +38,16 @@ public class Song extends BaseEntity {
     @NotBlank
     @Column(length = 70)
     @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
-    @Boost(10)
+    @Boost(5)
     @JsonView(ViewDetails.song.class)
     private String title;
     //    @URL
-    @Column(length = 100
-//            ,name = "image_url"
-    )
-    @Field(index = Index.NO, store = Store.YES)
+    @Column(length = 100)
     @JsonView(ViewDetails.song.class)
     private String imageUrl = "/assets/images/p1.jpg";
     //    @URL
-    @Column(length = 100
-//            ,name = "file_url"
-    )
+    @Column(length = 100)
     @JsonView(ViewDetails.song.class)
-    @Field(index = Index.NO, store = Store.YES)
     private String fileUrl = "/assets/audio/a0.mp3";
     @NotBlank
     @Lob
@@ -66,7 +59,7 @@ public class Song extends BaseEntity {
     @JoinColumn
     @NotNull
     @CreatedBy
-    @IndexedEmbedded(includeEmbeddedObjectId = true)
+//    @IndexedEmbedded(includeEmbeddedObjectId = true)
     @JsonView(ViewDetails.songUser.class)
     private User user;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "song")
@@ -99,7 +92,7 @@ public class Song extends BaseEntity {
         super.setCreatedDate(createdDate);
     }
 
-    public static String[] SearchField() {
-        return new String[]{"id", "title", "description", "user.id", "user.name", "user.email", "user.info"};
+    public static String[] ProjectionField() {
+        return new String[]{"id", "title", "description"};
     }
 }
