@@ -1,6 +1,5 @@
 package org.revo.Configration;
 
-import org.hibernate.search.jpa.FullTextEntityManager;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -21,9 +20,7 @@ public class BuildSearchIndex implements ApplicationListener<ContextRefreshedEve
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
         try {
-            FullTextEntityManager fullTextEntityManager =
-                    getFullTextEntityManager(em);
-            fullTextEntityManager.createIndexer().startAndWait();
+            getFullTextEntityManager(em).createIndexer().startAndWait();
         } catch (InterruptedException e) {
         }
 

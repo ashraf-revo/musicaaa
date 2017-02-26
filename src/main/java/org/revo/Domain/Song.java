@@ -93,4 +93,8 @@ public class Song extends BaseEntity {
         this.user = new User(uid, uname, uimageUrl, uphone, uinfo, uemail, ucreatedDate);
         super.setCreatedDate(createdDate);
     }
+
+    public static String[] SearchField() {
+        return new String[]{"id", "title", "description", "user.id", "user.name", "user.email", "user.info"};
+    }
 }
