@@ -6,10 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.validator.constraints.NotBlank;
 import org.revo.Util.ViewDetails;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static org.hibernate.search.annotations.Index.YES;
 
 /**
  * Created by ashraf on 18/01/17.
@@ -29,28 +32,36 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Indexed
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "music_song")
-public class Song extends BaseEntity{
+public class Song extends BaseEntity {
     @NotBlank
-    @Column(length = 30)
+    @Column(length = 70)
+    @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @JsonView(ViewDetails.song.class)
     private String title;
     //    @URL
     @Column(length = 100)
+    @Field(index = Index.NO, store = Store.YES)
     @JsonView(ViewDetails.song.class)
     private String imageUrl = "/assets/images/p1.jpg";
     //    @URL
     @Column(length = 100)
     @JsonView(ViewDetails.song.class)
+    @Field(index = Index.NO, store = Store.YES)
     private String fileUrl = "/assets/audio/a0.mp3";
     @NotBlank
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @JsonView(ViewDetails.song.class)
     private String description;
     @ManyToOne
     @JoinColumn
     @NotNull
     @CreatedBy
+    @IndexedEmbedded
     @JsonView(ViewDetails.songUser.class)
     private User user;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "song")
@@ -71,11 +82,6 @@ public class Song extends BaseEntity{
 
     public Song(Long id) {
         super.setId(id);
-    }
-
-    public Song(String title, String description) {
-        this.title = title;
-        this.description = description;
     }
 
     public Song(Long id, String title, String imageUrl, String fileUrl, String description, Long uid, String uname, String uimageUrl, String uphone, String uinfo, String uemail, Date ucreatedDate, Date createdDate) {

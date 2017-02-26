@@ -3,6 +3,7 @@ package org.revo.Controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.revo.Domain.*;
 import org.revo.Service.*;
+import org.revo.Util.ExtractText;
 import org.revo.Util.Util;
 import org.revo.Util.ViewDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
@@ -70,16 +69,16 @@ public class SongApi {
     @Autowired
     UserService userService;
 
-    @GetMapping("fuck/{parallelism}/{from}/{end}")
-    public void fuck(@PathVariable("parallelism") Integer parallelism, @PathVariable("from") Integer from, @PathVariable("end") Integer end) {
-        Flux.range(from, end)
-                .parallel(parallelism).runOn(Schedulers.parallel())
-                .map(String::valueOf).map(it -> new Song("1111111111111111111111111111", "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"))
-                .map(it -> songService.save(it)).subscribe(it -> {
-            likeService.like(new Like(it));
-            viewService.view(new View(it));
-        });
-
+    @GetMapping("fuck/{artist}")
+    public void fuck(@PathVariable("artist") String artist) {
+        ExtractText.extract(artist)
+                .map(it -> {
+                    Song song = new Song();
+                    song.setTitle(it.getTitle());
+                    song.setDescription(it.getWords());
+                    return song;
+                })
+                .subscribe(it -> songService.save(it));
     }
 
 }

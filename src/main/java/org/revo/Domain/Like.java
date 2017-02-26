@@ -42,8 +42,4 @@ public class Like extends BaseEntity {
         this.song = new Song(song);
         super.setCreatedDate(createdDate);
     }
-
-    public Like(Song song) {
-        this.song = song;
-    }
 }

@@ -7,8 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.revo.Util.ViewDetails;
@@ -21,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static org.hibernate.search.annotations.Index.YES;
 
 /**
  * Created by ashraf on 18/01/17.
@@ -31,28 +36,43 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties("authorities")
+@Indexed
+@AnalyzerDef(name = "customanalyzer",
+        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = NGramFilterFactory.class, params = {
+                        @org.hibernate.search.annotations.Parameter(name = "minGramSize", value = "3"),
+                        @org.hibernate.search.annotations.Parameter(name = "maxGramSize", value = "3")
+                }),
+                @TokenFilterDef(factory = StopFilterFactory.class, params = {
+                        @org.hibernate.search.annotations.Parameter(name = "ignoreCase", value = "true")
+                })
+        })
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "music_user")
-@Indexed
 public class User extends BaseUser {
     @NotBlank
-    @Column(length = 30)
-    @Field
+    @Column(length = 40)
+    @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @JsonView(ViewDetails.user.class)
     private String name;
     //    @URL
     @Column(length = 100)
+    @Field(index = Index.NO, store = Store.YES)
     @JsonView(ViewDetails.user.class)
     private String imageUrl = "/assets/images/a0.png";
     @NotBlank
     @Column(length = 15)
     @JsonView(ViewDetails.user.class)
     private String phone;
+    @Field(index = YES, store = Store.NO, analyzer = @Analyzer(definition = "customanalyzer"))
     @JsonView(ViewDetails.user.class)
     private String info;
     @Email
     @NotBlank
-    @Column(length = 30, unique = true)
+    @Column(length = 40, unique = true)
+    @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @JsonView(ViewDetails.user.class)
     private String email;
     @JsonProperty(access = WRITE_ONLY)
@@ -65,6 +85,7 @@ public class User extends BaseUser {
     @JsonView(ViewDetails.user.class)
     private String currentPassword;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @ContainedIn
     @JsonView(ViewDetails.userSongs.class)
     private List<Song> songs = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")

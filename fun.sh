@@ -36,12 +36,17 @@ function run_angular(){
     cd src/main/resources/music-static/
     ng serve
 }
+function run_custom(){
+    mvn spring-boot:run -Dspring.profiles.active=custom
+}
 
 echo "1 for angular build"
 echo "2 for run app"
 echo "3 for push"
 echo "4 for services"
 echo "5 for run angular"
+echo "6 for run custom"
+
 read value
 if [ $value -eq 1 ]; then
     run_angular_build
@@ -53,4 +58,6 @@ elif [ $value -eq 4 ]; then
     run_services
 elif [ $value -eq 5 ]; then
     run_angular
+elif [ $value -eq 6 ]; then
+    run_custom
 fi
