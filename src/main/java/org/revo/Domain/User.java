@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static org.hibernate.search.annotations.Index.YES;
 
@@ -35,7 +36,6 @@ import static org.hibernate.search.annotations.Index.YES;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties("authorities")
 @Indexed
 @AnalyzerDef(name = "customanalyzer",
         tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
@@ -99,6 +99,7 @@ public class User extends BaseUser {
 
 
     @Override
+    @JsonProperty(access = READ_ONLY)
     public String getUsername() {
         return email;
     }
@@ -122,7 +123,7 @@ public class User extends BaseUser {
         super.setCreatedDate(createdDate);
     }
 
-    public User(Long id, String name, String imageUrl, String phone, String info, String email, Date createdDate, String password, boolean enable, boolean locked) {
+    public User(Long id, String name, String imageUrl, String phone, String info, String email, Date createdDate, String password, boolean enable, boolean locked,String type) {
         super.setId(id);
         this.name = name;
         this.imageUrl = imageUrl;
@@ -133,5 +134,7 @@ public class User extends BaseUser {
         this.password = password;
         super.setEnable(enable);
         super.setLocked(locked);
+        super.setType(type);
     }
+
 }

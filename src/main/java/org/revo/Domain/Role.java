@@ -1,26 +1,21 @@
 package org.revo.Domain;
 
+import lombok.Getter;
+
 import static org.revo.Domain.Role.Paths.*;
 
 /**
  * Created by ashraf on 14/12/16.
  */
+@Getter
 public enum Role {
     USER("USER", USER_PATH), SONG("SONG", SONG_PATH), ADMIN("ADMIN", ADMIN_PATH);
-    String role;
-    String path;
+    private String role;
+    private String path;
 
     Role(String role, String path) {
         this.role = role;
         this.path = path;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public String getPath() {
-        return path;
     }
 
     public String getBuildRole() {

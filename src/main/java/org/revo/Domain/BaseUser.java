@@ -42,14 +42,15 @@ public abstract class BaseUser extends BaseEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<String> roles = new ArrayList<>();
-        if (type.charAt(0) == 1) {
+        if (type.charAt(0) == '1') {
             roles.add(USER.getBuildRole());
         }
-        if (type.charAt(1) == 1) {
+        if (type.charAt(1) == '1') {
             roles.add(SONG.getBuildRole());
         }
-        if (type.charAt(2) == 1) {
+        if (type.charAt(2) == '1') {
             roles.add(ADMIN.getBuildRole());
+            roles.add("ROLE_ACTUATOR");
         }
         return AuthorityUtils.createAuthorityList(roles.stream().toArray(String[]::new));
     }
