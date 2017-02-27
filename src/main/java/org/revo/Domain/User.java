@@ -57,7 +57,7 @@ public class User extends BaseUser {
     @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @JsonView(ViewDetails.user.class)
     private String name;
-    //    @URL
+    //        @URL
     @Column(length = 100)
     @Field(index = Index.NO, store = Store.YES)
     @JsonView(ViewDetails.user.class)
@@ -134,5 +134,4 @@ public class User extends BaseUser {
         super.setEnable(enable);
         super.setLocked(locked);
     }
-
 }
