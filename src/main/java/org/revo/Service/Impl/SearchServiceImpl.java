@@ -30,13 +30,12 @@ public class SearchServiceImpl implements SearchService {
     public List<Song> search(SearchCriteria searchCriteria,String ... fields) {
         @SuppressWarnings("unchecked") List<Object[]> data = getFullTextQuery(searchCriteria,fields)
                 .setProjection(Song.ProjectionField())
-
                 .getResultList();
         return data.stream().map(it -> {
             Song song = new Song();
             song.setId(Long.valueOf(String.valueOf(it[0])));
             song.setTitle(String.valueOf(it[1]));
-            song.setDescription(String.valueOf(it[2]));
+            song.setImageUrl(String.valueOf(it[2]));
             return song;
         }).collect(toList());
     }

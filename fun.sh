@@ -26,10 +26,12 @@ function run_push(){
 
 function run_services(){
     cf delete music
-    cf delete-service MongoDbmusic
-    cf delete-service MySqlDbmusic
-#    cf create-service mLab sandbox MongoDbmusic
-    cf create-service cleardb spark MySqlDbmusic
+    cf delete-service MySqlDbMusic
+    cf delete-service ElasticSearchMusic
+    cf delete-service NewRelicMusic
+    cf create-service cleardb spark MySqlDbMusic
+    cf create-service searchly starter ElasticSearchMusic
+    cf create-service newrelic standard NewRelicMusic
 }
 
 function run_angular(){

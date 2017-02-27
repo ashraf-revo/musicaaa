@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static org.hibernate.search.annotations.Index.NO;
 import static org.hibernate.search.annotations.Index.YES;
 
 /**
@@ -43,6 +44,7 @@ public class Song extends BaseEntity {
     private String title;
     //    @URL
     @Column(length = 100)
+    @Field(index = NO, store = Store.YES)
     @JsonView(ViewDetails.song.class)
     private String imageUrl = "/assets/images/p1.jpg";
     //    @URL
@@ -52,14 +54,12 @@ public class Song extends BaseEntity {
     @NotBlank
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Field(index = YES, store = Store.YES, analyzer = @Analyzer(definition = "customanalyzer"))
     @JsonView(ViewDetails.song.class)
     private String description;
     @ManyToOne
     @JoinColumn
     @NotNull
     @CreatedBy
-//    @IndexedEmbedded(includeEmbeddedObjectId = true)
     @JsonView(ViewDetails.songUser.class)
     private User user;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "song")
@@ -93,6 +93,6 @@ public class Song extends BaseEntity {
     }
 
     public static String[] ProjectionField() {
-        return new String[]{"id", "title", "description"};
+        return new String[]{"id", "title","imageUrl"};
     }
 }
