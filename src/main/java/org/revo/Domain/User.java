@@ -85,7 +85,6 @@ public class User extends BaseUser {
     @JsonView(ViewDetails.user.class)
     private String currentPassword;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-//    @ContainedIn
     @JsonView(ViewDetails.userSongs.class)
     private List<Song> songs = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
