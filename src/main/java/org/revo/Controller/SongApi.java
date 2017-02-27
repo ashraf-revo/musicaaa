@@ -68,10 +68,6 @@ public class SongApi {
         return ResponseEntity.ok().build();
     }
 
-
-    @Autowired
-    UserService userService;
-
     @GetMapping("fuck/{artist}")
     public void fuck(@PathVariable("artist") String artist) {
         ExtractText.extract(artist)
