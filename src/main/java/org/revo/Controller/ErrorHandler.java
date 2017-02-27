@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartException;
 /**
  * Created by ashraf on 06/02/17.
  */
+@SuppressWarnings("unused")
 @ControllerAdvice
 public class ErrorHandler {
     @ExceptionHandler(MultipartException.class)

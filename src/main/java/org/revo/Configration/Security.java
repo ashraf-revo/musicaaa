@@ -23,6 +23,7 @@ import static org.springframework.http.HttpMethod.POST;
 /**
  * Created by ashraf on 14/12/16.
  */
+@SuppressWarnings("SpringFacetCodeInspection")
 @Configuration
 @EnableWebSecurity
 public class Security extends WebSecurityConfigurerAdapter {

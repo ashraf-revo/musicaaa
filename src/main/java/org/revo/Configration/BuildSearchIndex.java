@@ -12,6 +12,7 @@ import static org.hibernate.search.jpa.Search.getFullTextEntityManager;
 /**
  * Created by revo on 26/09/15.
  */
+@SuppressWarnings("unused")
 @Component
 public class BuildSearchIndex implements ApplicationListener<ContextRefreshedEvent> {
     @PersistenceContext

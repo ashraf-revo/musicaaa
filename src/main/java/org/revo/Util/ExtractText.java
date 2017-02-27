@@ -29,7 +29,7 @@ public class ExtractText {
                         .filter(Objects::nonNull);
     }
 
-    static public AzlyricdbSong t1(String url) {
+    static private AzlyricdbSong t1(String url) {
         try {
             Source source = new Source(new URL(url));
             source.fullSequentialParse();
@@ -46,7 +46,7 @@ public class ExtractText {
         return null;
     }
 
-    static public AzlyricdbArtist t2(String site, String artist) {
+    static private AzlyricdbArtist t2(String site, String artist) {
         AzlyricdbArtist azlyricdbArtist = new AzlyricdbArtist();
         try {
             Source source = new Source(new URL(site + artist));
