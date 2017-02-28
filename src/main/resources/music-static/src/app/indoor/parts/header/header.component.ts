@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
+import {Component, OnInit, Input} from "@angular/core";
+import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 import {User} from "../../../domain/User";
 import {PlayerService} from "../../../services/player.service";
@@ -11,10 +11,11 @@ import {UserService} from "../../../services/user.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Input()
   searchKey: string = '';
   user: User = new User();
 
-  constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _authService: AuthService, private _playerService: PlayerService, private _userService: UserService) {
+  constructor(private _router: Router, private _authService: AuthService, private _playerService: PlayerService, private _userService: UserService) {
   }
 
   ngOnInit() {
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   search() {
-    if (this.searchKey.trim() != "") this._router.navigate(['/search', this.searchKey]);
+    if (this.searchKey.trim() != "") this._router.navigate(['/filter', this.searchKey]);
   }
 
   logout() {

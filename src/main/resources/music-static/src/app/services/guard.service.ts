@@ -6,7 +6,7 @@ import {DefaultService} from "./default.service";
 
 @Injectable()
 export class GuardService implements CanActivate {
-  securedRoutes: string[] = ['home', 'profile', 'upload', 'search', 'settings'];
+  securedRoutes: string[] = ['home', 'profile', 'upload', 'filter', 'settings'];
   authRedirectRoutes: string[] = ['signin', 'signup', 'active', ''];
 
   constructor(private _router: Router, private _authService: AuthService, private _defaultService: DefaultService) {

@@ -5,7 +5,6 @@ import {Observable} from "rxjs";
 import {DefaultService} from "./default.service";
 import {AuthService} from "./auth.service";
 import {SearchCriteria} from "../domain/SearchCriteria";
-import {PageableSong} from "../domain/PageableSong";
 import {Like} from "../domain/Like";
 import {View} from "../domain/View";
 
@@ -22,9 +21,9 @@ export class SongService {
     return this._http.get(this.url).map(res => res.json())
   }
 
-  songsSearch(searchCriteria: SearchCriteria): Observable<PageableSong> {
-    if (!this._authService.isAuth() || this._defaultService.mock)return Observable.empty<PageableSong>();
-    return this._http.post(this.url + "/search", searchCriteria).map(res => res.json())
+  songsSearchAndGet(searchCriteria: SearchCriteria): Observable<Song[]> {
+    if (!this._authService.isAuth() || this._defaultService.mock)return Observable.empty<Song[]>();
+    return this._http.post(this.url + "/search?full=true", searchCriteria).map(res => res.json())
   }
 
   like(song: Song): Observable<Like> {

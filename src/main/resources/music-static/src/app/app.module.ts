@@ -21,10 +21,10 @@ import {UserService} from "./services/user.service";
 import {GuardService} from "./services/guard.service";
 import {AuthService} from "./services/auth.service";
 import {DefaultService} from "./services/default.service";
-import {PaginationComponent} from "./indoor/parts/pagination/pagination.component";
 import { SettingsComponent } from './indoor/views/settings/settings.component';
 import { ActiveComponent } from './outdoor/active/active.component';
 import { TabComponent } from './indoor/parts/tab/tab.component';
+import { Error404Component } from './outdoor/error404/error404.component';
 export function Cookie() {
   return new CookieXSRFStrategy('XSRF-TOKEN', 'X-XSRF-TOKEN')
 }
@@ -43,10 +43,10 @@ export function Cookie() {
     SongComponent,
     UploadComponent,
     SearchComponent,
-    PaginationComponent,
     SettingsComponent,
     ActiveComponent,
-    TabComponent],
+    TabComponent,
+    Error404Component],
   imports: [LocalStorageModule.withConfig({
     prefix: 'my-app',
     storageType: 'localStorage'
